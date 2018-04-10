@@ -1,0 +1,56 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+
+{% block static %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h2>Polls list</h2>
+  <div class="empty"></div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Poll name</th>
+        <th>Date published</th>
+        <th>Number of questions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for poll in polls %}
+          <tr>
+            {% if poll.logo %}
+                <td><img class="pic_small" src="/media/{{ poll.logo }}"/> </td>
+            {% else %}
+                <td><img class="pic_small" src={% static 'images/herthstone.jpg' %}/> </td>
+            {% endif %}
+            <td><a href="{% url 'poll' poll.pk %}">{{ poll.poll_name }}</a></td>
+            <td>{{ poll.pub_date }}</td>
+            <td>{{ poll.question_set.all.count }}</td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="pagination">
+    <div id="listing">
+      <span class="step-links">
+        {% if polls.has_previous %}
+            <a href="?page={{ polls.previous_page_number }}"> previous </a>
+        {% endif %}
+        <span class="current">
+          Page {{ polls.number }} of {{ polls.paginator.num_pages }}.
+        </span>
+        {% if polls.has_next %}
+            <a href="?page={{ polls.next_page_number }}"> next </a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+</div>
+{% endblock %}

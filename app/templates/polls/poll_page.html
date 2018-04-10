@@ -1,0 +1,47 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+
+{% block static %}
+    <script src="{% static 'js/polls-ajax.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h2>{{ poll.poll_name }}</h2>
+  <div class="empty"></div>
+    {% if is_finished %}
+    {% for question in questions %}
+            <div><a href="">{{ question.question_text }}</a></div>
+            <h5>Number of users who answered this question</h5>
+            <div>{{ question.question_user_count }}</div>
+            <h5>Number of choices</h5>
+            <div>{{ question.choice_set.all.count }}</div>
+
+            {% for choice in question.choice_set.all %}
+                <div>{{ choice.choice_text }}</div>
+                <h5>Persentage of users who chose this variant</h5>
+                <div>{{ choice.rate }}</div>
+            {% endfor %}
+    {% endfor %}
+    {% else %}
+        {% for question in questions %}
+            <div><a href="">{{ question.question_text }}</a></div>
+            <h5>Number of users who answered this question</h5>
+            <div>{{ question.question_user_count }}</div>
+            <h5>Number of choices</h5>
+            <div>{{ question.choice_set.all.count }}</div>
+
+            {% for choice in question.choice_set.all %}
+                <div>{{ choice.choice_text }}</div>
+                <h5>Number of users who chose this variant</h5>
+                <div>{{ choice.choice_user_count }}</div>
+                <button class="choose btn btn-primary" data-choiceid="{{ choice.id }}" type="button">
+                    Choose
+                </button>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+</div>
+{% endblock %}

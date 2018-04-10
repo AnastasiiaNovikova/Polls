@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <title> {% block title %} {% endblock %} </title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="{% static 'css/polls.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        {% block static %}
+        {% endblock %}
+    </head>
+    <body>
+    <div id="mycontainer">
+    <ul class="nav nav-tabs nav-justified">
+    <li class="active"><a href="">My Page</a></li>
+    <li><a href="{% url 'polls_list'%}">Polls</a></li>
+    <li><a href="">My polls</a></li>
+    <li><a href="">Help</a></li>
+    </ul>
+        <div id="empty"></div>
+    {% block content %}
+    {% endblock %}
+    </div>
+    </body>
+</html>
